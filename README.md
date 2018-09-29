@@ -27,14 +27,9 @@ npm config set registry http://registry.npmjs.org
 
 ### 安装方法
 
-##### 第一种
-把package.json放在工作根目录，然后执行命令`npm i`
-
-##### 第二种
 ```
 npm install fs path gulp del gulp-replace browser-sync gulp-uglify gulp-csso gulp-sass gulp-util gulp-jshint jshint gulp-plumber gulp-dom gulp-strip-comments gulp-rev gulp-rev-collector gulp.spritesmith gulp-autoprefixer run-sequence gulp-filter gulp-html-minify gulp-imagemin gulp-concat browsersync-iis chokidar
 ```
-（建议第一种）
 
 ### 开发
 ```
