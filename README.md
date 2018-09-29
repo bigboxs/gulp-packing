@@ -60,6 +60,7 @@ var paths = {
     dev: {
         dir: './',
         del: ['dist', 'rev'],
+        clean: ['css'],
         sprite: 'sprite',
         spriteDir: ['sprite/**/*.{jpg,png}'],
         img:['img/**/*.{jpg,jpeg,png,gif,webp}'],
@@ -71,7 +72,6 @@ var paths = {
     dist: {
         dir: 'dist',
         clean: ['dist'],
-        del: ['css'],
         css: ['css/*.css', '!css/sprite_*.*'],
         html: ['*.{html,shtm}', 'public/*.{html,htm}'],
         rev: 'rev/rev-manifest.json'
@@ -111,6 +111,7 @@ var paths = {
 #### 配置说明
 
 - "link": 图片服路径
+- "gate": 当前站点根目录文件名称（重要），专题不需要，站点必须配置
 - "rem":  是否使用rem处理雪碧图
 - "subdir": 组件模板路径
 - "apilink_test": 打包需要替换的域名
