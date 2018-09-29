@@ -38,6 +38,7 @@ var paths = {
     dev: {
         dir: './',
         del: ['dist', 'rev'],
+        clean: ['css'],
         sprite: 'sprite',
         spriteDir: ['sprite/**/*.{jpg,png}'],
         img:['img/**/*.{jpg,jpeg,png,gif,webp}'],
@@ -49,7 +50,6 @@ var paths = {
     dist: {
         dir: 'dist',
         clean: ['dist'],
-        del: ['css'],
         css: ['css/*.css', '!css/sprite_*.*'],
         html: ['*.{html,shtm}', 'public/*.{html,htm}'],
         rev: 'rev/rev-manifest.json'
@@ -176,7 +176,7 @@ gulp.task('reload', function () {
     browserSync.reload();
 });
 //浏览器预览
-gulp.task('dev-browser', ['dev-js'],function () {
+gulp.task('dev-browser', ['dev-scss'],function () {
     var basedir = paths.dev.dir;
     if (project.gate) {
         var arr_dir = path.dirname(__filename).split(path.sep);
@@ -198,45 +198,41 @@ gulp.task('dev-browser', ['dev-js'],function () {
 //监听文件
 //https://github.com/paulmillr/chokidar
 gulp.task('dev-watch', ['dev-browser'], function () {
-    gulp.watch(paths.dev.html, ['reload']);
-    gulp.watch(paths.dev.scss, ['dev-clean','dev-scss']);
-    gulp.watch(paths.dev.js, ['dev-js','reload']);
+    chokidar.watch(paths.dev.html).on('change', function(){
+        runSequence('reload');
+    });
+    chokidar.watch(paths.dev.scss).on('change', function(){
+        runSequence('dev-scss');
+    });
+    chokidar.watch(paths.dev.js).on('change', function(){
+        runSequence('dev-js','reload');
+    });
+    chokidar.watch(paths.dev.imgDir,{
+        ignoreInitial: true
+    }).on('change', function(){
+        runSequence('reload');
+    });
 
     //监听雪碧图文件夹
     chokidar.watch(paths.dev.spriteDir,{
-        persistent: true,
-        ignoreInitial: true,
-        alwaysStat: true,
-        depth: 10,
-        awaitWriteFinish: {
-            stabilityThreshold: 1000,
-            pollInterval: 100
-        }
+        ignoreInitial: true
     }).on('add', function(path, event){
-        runSequence(['sprite','dev-clean','dev-scss']);
+        runSequence('sprite',['dev-scss']);
     }).on('change', function(path, event){
-        runSequence(['sprite','dev-clean','dev-scss']);
+        runSequence('sprite',['dev-scss']);
     }).on('unlink', function(path, event){
-        runSequence(['sprite','dev-clean','dev-scss']);
+        runSequence('sprite',['dev-scss']);
     }).on('error', function(error, event){
         console.log('Watcher error: ${error}');
-    });
-
-    //刷新现在图片
-    chokidar.watch(paths.dev.imgDir,{
-        persistent: true,
-        ignoreInitial: true
-    }).on('change', function(path, event){
-        runSequence(['reload']);
-    });
+    });  
     
 });
 //清理编译文件
 gulp.task('dev-clean', function (cb) {
-    return del(paths.dist.del, cb);
+    return del(paths.dev.clean, cb);
 });
 //编译开发模式（区分先后顺序）
-gulp.task('dev',['dev-clean', 'dev-scss', 'dev-js', 'dev-browser', 'dev-watch']);
+gulp.task('dev',['dev-js','dev-watch']);
 ///////////////////////////////////////    END   /////////////////////////////////////////
 
 
@@ -405,7 +401,7 @@ gulp.task('dist-clean', function (cb) {
     return del(paths.dist.clean, cb);
 });
 //打包发布（区分先后顺序）
-gulp.task('dist', ['dist-clean', 'dist-img', 'dist-css', 'dist-js', 'dist-html']);
+gulp.task('dist', ['dist-html']);
 ///////////////////////////////////////    END   /////////////////////////////////////////
 
 
