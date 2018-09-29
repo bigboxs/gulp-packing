@@ -1,0 +1,17 @@
+{
+    "link": "",
+    "rem": false,
+    "gate": "",
+    "subdir":"",
+    "apilink_test": [],
+    "apilink": "",
+    "task": {
+        "checkTitle": true,
+        "checkH1": true,
+        "checkTongjiJS": true,
+        "checkDescKeyword": true,
+        "checkCharset": true,
+        "checkLang": true,
+        "checkTopbar": true
+    }
+}

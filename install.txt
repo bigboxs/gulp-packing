@@ -1,0 +1,2 @@
+npm install fs path gulp del gulp-replace browser-sync gulp-uglify gulp-csso gulp-sass gulp-util gulp-jshint jshint gulp-plumber gulp-dom gulp-strip-comments gulp-rev gulp-rev-collector gulp.spritesmith gulp-autoprefixer run-sequence gulp-filter gulp-html-minify gulp-imagemin gulp-concat browsersync-iis chokidar
+
