@@ -190,7 +190,7 @@ gulp.task('dev-browser', ['dev-js'],function () {
             baseDir: basedir,
             middleware: browseriis({
                 baseDir: basedir,
-                ext: ['.shtm','.html']
+                ext: '.shtm'
             })
         }
     });
@@ -198,7 +198,6 @@ gulp.task('dev-browser', ['dev-js'],function () {
 //监听文件
 //https://github.com/paulmillr/chokidar
 gulp.task('dev-watch', ['dev-browser'], function () {
-    var first_watch=true;
     gulp.watch(paths.dev.html, ['reload']);
     gulp.watch(paths.dev.scss, ['dev-clean','dev-scss']);
     gulp.watch(paths.dev.js, ['dev-js','reload']);
